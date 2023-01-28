@@ -2,3 +2,12 @@
 .history-btn{
     margin: 5px;
 }
+
+/* today div styles */
+#today {
+    padding-left: 5px;
+}
+
+.top-today {
+    display: flex;
+}
