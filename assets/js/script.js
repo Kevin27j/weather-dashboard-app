@@ -4,6 +4,11 @@ let apiKey = "99c746c0900a3f6f8b4898438d454a38";
 let todayDiv = $("#today");
 let forecastDiv = $("#forecast");
 
+// Initialize variable for input value
+let cityName = "";
+// Initialize Button history cities element
+let cityButton = "";
+
 // add click event to search button
 // get input value and create button style with input value
 $("#search-button").on("click", function (event) {
@@ -18,17 +23,15 @@ $("#search-button").on("click", function (event) {
     todayDiv.css("border", "1px solid black");
 
     // save value of city input to variable
-    let cityName = $("#search-input").val();
+    cityName = $("#search-input").val();
     // console.log(cityName); // TEST
 
     // create buttons with city value
-    let cityButton = $("<button>")
-        // add content with input value
-        .text(cityName)
-        // add classes for style
-        .addClass("btn btn-secondary history-btn")
-        // add data attribute
-        .attr("data-name", cityName);
+    cityButton = $("<button>", {
+        class: "btn btn-secondary history-btn",
+        id: "history-btn",
+        "data-name": cityName
+    }).text(cityName);
 
     // append the button to history div
     $("#history").append(cityButton);
@@ -44,6 +47,7 @@ $("#search-button").on("click", function (event) {
         method: "GET",
     }).then(function (response) {
         // console.log(response); // TEST
+
 
         // TODAY FORECAST
         // TOP DIV
@@ -109,10 +113,10 @@ $("#search-button").on("click", function (event) {
         // Loop through forecast list array and return only list with time 12pm
         let listForecast = response.list;
         for (let i = 1; i < listForecast.length; i++) {
-            // Target 6am time array list to use for forecast
+            // Target 9am time array list to use for forecast
             let forecastDateTime = listForecast[i].dt_txt.substring(10);
-            // If time is 6am
-            if (forecastDateTime.includes("06:00:00")) {
+            // If time is 9am
+            if (forecastDateTime.includes("09:00:00")) {
                 // console.log(forecastDateTime); // TEST
                 // console.log(listForecast[i]); // TEST
 
@@ -122,8 +126,8 @@ $("#search-button").on("click", function (event) {
                     "color": "white",
                     "padding": "10px",
                     "margin": "5px"
-                    });
-                
+                });
+
                 // Content for each Card
                 // Add date to card
                 forecastCard.append($("<h4>")
@@ -134,7 +138,7 @@ $("#search-button").on("click", function (event) {
                 // Icon URL
                 let forecastIconUrl = "https://openweathermap.org/img/w/" + forecastIconcode + ".png";
                 // Create div with img element for icon
-                let iconImg = $("<div>", {class: "icon-img"}).append($("<img>", {src: forecastIconUrl}))
+                let iconImg = $("<div>", { class: "icon-img" }).append($("<img>", { src: forecastIconUrl }))
                 // Append icon Img to Card
                 forecastCard.append(iconImg);
 
@@ -157,5 +161,12 @@ $("#search-button").on("click", function (event) {
 // SAVE SEARCHES TO LOCAL STORAGE
 
 // WHEN I CLICK TO A HISTORY BUTTON I GET THAT CITY WEATHER INFO
-
+$("#history-btn").on("click", function (event) {
+    let currentBtn = event.target
+    // if Button city name clicked
+    if (currentBtn.attr("data-name") === cityButton.attr("data-name")){
+        
+    }
+        // Show weather condition for that button city name
+})
 // FIX MOBILE MEDIA LAYOUT
