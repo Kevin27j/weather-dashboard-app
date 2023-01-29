@@ -105,43 +105,54 @@ $("#search-button").on("click", function (event) {
         let forecastFiveCards = $("<div>", { class: "forecast-cards" }).css("display", "flex");
 
         // Div Forecast Container Flex
-        let flexContainerForecast = $("<div>", { class: "wrap-forecast" });
+        let wrapForecast = $("<div>", { class: "wrap-forecast" });
         // Title for forecast Cards, Append to Div
-        flexContainerForecast.prepend($("<h2>").text("5-Day Forecast"));
+        wrapForecast.prepend($("<h2>").text("5-Day Forecast"));
         // Append Forecast Cards
-        flexContainerForecast.append(forecastFiveCards);
+        wrapForecast.append(forecastFiveCards);
         // Append Cards Div to Forecast Div
-        forecastDiv.append(flexContainerForecast)
+        forecastDiv.append(wrapForecast)
 
 
         // Loop through forecast list array and return only list with time 12pm
         let listForecast = response.list;
-        for (let i = 0; i < listForecast.length; i++) {
+        for (let i = 1; i < listForecast.length; i++) {
             // Target 12pm time array list to use for forecast
             let forecastDateTime = listForecast[i].dt_txt.substring(10);
             // If time is 12pm
-            if (forecastDateTime.includes("12:00:00")) {
+            if (forecastDateTime.includes("06:00:00")) {
                 // console.log(forecastDateTime); // TEST
-                console.log(listForecast[i]); // TEST
+                // console.log(listForecast[i]); // TEST
 
                 // Div for each Card
-                let forecastCard = $("<div>", { class: "card" }).css("background-color", "grey");
+                let forecastCard = $("<div>", { class: "card" }).css({
+                    "background-color": "cadetblue",
+                    "color": "white",
+                    "padding": "5px",
+                    "margin": "5px"
+                    });
                 
                 // Content for each Card
                 // Add date to card
                 forecastCard.append($("<h4>")
                     .text(moment.unix(listForecast[i].dt).format("DD, MM, YYYY")));
 
-                // weather Icon
+                // Weather Icon
                 let forecastIconcode = listForecast[i].weather[0].icon;
                 // Icon URL
                 let forecastIconUrl = "http://openweathermap.org/img/w/" + forecastIconcode + ".png";
-
                 // Create div with img element for icon
                 let iconImg = $("<div>", {class: "icon-img"}).append($("<img>", {src: forecastIconUrl}))
-                
                 // Append icon Img to Card
                 forecastCard.append(iconImg);
+
+                // print card forecast temperature 
+                let forecastTempToC = listForecast[i].main.temp - 273.15;
+                forecastCard.append($("<p>").text("Temp: " + forecastTempToC.toFixed(2) + " C"));
+                // print forecast wind
+                forecastCard.append($("<p>").text("Wind: " + listForecast[i].wind.speed + " KPH"));
+                // print forecast humidity
+                forecastCard.append($("<p>").text("Humidity: " + listForecast[i].main.humidity + "%"));
 
                 // Append Card to Cards Div
                 forecastFiveCards.append(forecastCard);
