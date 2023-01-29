@@ -19,8 +19,6 @@ $("#search-button").on("click", function (event) {
 
     // save value of city input to variable
     let cityName = $("#search-input").val();
-    // remove all whitespaces from input
-    // cityName.replace(/\s/g, '');
     // console.log(cityName); // TEST
 
     // create buttons with city value
@@ -37,7 +35,7 @@ $("#search-button").on("click", function (event) {
 
     // queryURL API by city name
     let queryUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + apiKey;
-    console.log(queryUrl); // TEST
+    // console.log(queryUrl); // TEST
 
 
     // retrieve data from API call
@@ -111,9 +109,9 @@ $("#search-button").on("click", function (event) {
         // Loop through forecast list array and return only list with time 12pm
         let listForecast = response.list;
         for (let i = 1; i < listForecast.length; i++) {
-            // Target 12pm time array list to use for forecast
+            // Target 6am time array list to use for forecast
             let forecastDateTime = listForecast[i].dt_txt.substring(10);
-            // If time is 12pm
+            // If time is 6am
             if (forecastDateTime.includes("06:00:00")) {
                 // console.log(forecastDateTime); // TEST
                 // console.log(listForecast[i]); // TEST
@@ -122,7 +120,7 @@ $("#search-button").on("click", function (event) {
                 let forecastCard = $("<div>", { class: "card" }).css({
                     "background-color": "cadetblue",
                     "color": "white",
-                    "padding": "5px",
+                    "padding": "10px",
                     "margin": "5px"
                     });
                 
@@ -155,3 +153,9 @@ $("#search-button").on("click", function (event) {
     })
 })
 
+
+// SAVE SEARCHES TO LOCAL STORAGE
+
+// WHEN I CLICK TO A HISTORY BUTTON I GET THAT CITY WEATHER INFO
+
+// FIX MOBILE MEDIA LAYOUT
