@@ -32,6 +32,9 @@ function displayWeather() {
     }).then(function (response) {
         // console.log(response); // TEST
 
+        // Save City Name value to local storage
+        localStorage.setItem("cityName", cityName);
+
 
         // TODAY FORECAST
         // TOP DIV
@@ -160,10 +163,8 @@ $("#search-button").on("click", function (event) {
     cityName = $("#search-input").val();
     // console.log(cityName); // TEST
 
-
     renderHistoryButton();
     displayWeather();
-
 })
 
 // Add click event on the document object 
@@ -173,7 +174,6 @@ $(document).on("click", ".history-btn", function () {
 
     // Set cityName to clicked Button attribute "data-name"
     cityName = $(this).attr("data-name");
-
     // clear weather dashboard every time a new search is made
     todayDiv.empty();
     forecastDiv.empty();
