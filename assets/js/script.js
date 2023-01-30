@@ -1,45 +1,29 @@
-// Return a output with the relative data weather
-let apiKey = "99c746c0900a3f6f8b4898438d454a38";
-
+// Target divs for Weather Output
 let todayDiv = $("#today");
 let forecastDiv = $("#forecast");
 
 // Initialize variable for input value
 let cityName = "";
-// Initialize Button history cities element
+// Initialize variable for Buttons of City History Inputs
 let cityButton = "";
 
-// add click event to search button
-// get input value and create button style with input value
-$("#search-button").on("click", function (event) {
-    // prevent page from reloading
-    event.preventDefault();
-
-    // clear weather dashboard
-    todayDiv.text("");
-    forecastDiv.text("");
-
-    // style ON for today and forecast DIVs
-    todayDiv.css("border", "1px solid black");
-
-    // save value of city input to variable
-    cityName = $("#search-input").val();
-    // console.log(cityName); // TEST
-
+// Function to create Buttons with cities history search
+function renderHistoryButton() {
     // create buttons with city value
     cityButton = $("<button>", {
         class: "btn btn-secondary history-btn",
-        id: "history-btn",
         "data-name": cityName
     }).text(cityName);
 
     // append the button to history div
     $("#history").append(cityButton);
+}
 
+function displayWeather() {
+    let apiKey = "99c746c0900a3f6f8b4898438d454a38";
     // queryURL API by city name
     let queryUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + apiKey;
     // console.log(queryUrl); // TEST
-
 
     // retrieve data from API call
     $.ajax({
@@ -155,18 +139,48 @@ $("#search-button").on("click", function (event) {
             }
         }
     })
+
+}
+
+// add click event to search button
+// get input value and create button style with input value
+$("#search-button").on("click", function (event) {
+
+    // prevent page from reloading
+    event.preventDefault();
+
+    // clear weather dashboard every time a new search is made
+    todayDiv.empty();
+    forecastDiv.empty();
+
+    // style ON for today and forecast DIVs
+    todayDiv.css("border", "1px solid black");
+
+    // save value of city input to variable
+    cityName = $("#search-input").val();
+    // console.log(cityName); // TEST
+
+
+    renderHistoryButton();
+    displayWeather();
+
 })
 
+// Add click event on the document object 
+// hen a button with .history-button class is present
+// To show the button city weather info
+$(document).on("click", ".history-btn", function () {
+
+    // Set cityName to clicked Button attribute "data-name"
+    cityName = $(this).attr("data-name");
+
+    // clear weather dashboard every time a new search is made
+    todayDiv.empty();
+    forecastDiv.empty();
+
+    displayWeather();
+});
 
 // SAVE SEARCHES TO LOCAL STORAGE
 
-// WHEN I CLICK TO A HISTORY BUTTON I GET THAT CITY WEATHER INFO
-$("#history-btn").on("click", function (event) {
-    let currentBtn = event.target
-    // if Button city name clicked
-    if (currentBtn.attr("data-name") === cityButton.attr("data-name")){
-        
-    }
-        // Show weather condition for that button city name
-})
 // FIX MOBILE MEDIA LAYOUT
