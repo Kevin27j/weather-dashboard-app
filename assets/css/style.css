@@ -1,5 +1,5 @@
 /* style for buttons in history ID */
-.history-btn{
+.history-btn {
     margin: 5px;
 }
 
@@ -7,11 +7,20 @@
 #today {
     padding-left: 5px;
 }
-#forecast {
-    margin: 0;
-}
 
 .top-today {
     display: flex;
    
+}
+
+#forecast {
+    flex-direction: column;
+    margin: 0;
+}
+
+@media screen and (max-width: 580px) {
+.forecast-cards {
+    flex-direction: column;
+}
+
 }

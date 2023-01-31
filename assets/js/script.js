@@ -183,4 +183,3 @@ $(document).on("click", ".history-btn", function () {
 
 // SAVE SEARCHES TO LOCAL STORAGE
 
-// FIX MOBILE MEDIA LAYOUT
