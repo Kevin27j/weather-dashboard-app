@@ -9,6 +9,8 @@ let cityButton = "";
 
 // Function to create Buttons with cities history search
 function renderHistoryButton() {
+
+
     // create buttons with city value
     cityButton = $("<button>", {
         class: "btn btn-secondary history-btn",
@@ -30,7 +32,7 @@ function displayWeather() {
         url: queryUrl,
         method: "GET",
     }).then(function (response) {
-        // console.log(response); // TEST
+        console.log(response); // TEST
 
         // Save City Name value to local storage
         localStorage.setItem("cityName", cityName);
@@ -148,23 +150,28 @@ function displayWeather() {
 // add click event to search button
 // get input value and create button style with input value
 $("#search-button").on("click", function (event) {
-
     // prevent page from reloading
     event.preventDefault();
-
-    // clear weather dashboard every time a new search is made
-    todayDiv.empty();
-    forecastDiv.empty();
-
-    // style ON for today and forecast DIVs
-    todayDiv.css("border", "1px solid black");
 
     // save value of city input to variable
     cityName = $("#search-input").val();
     // console.log(cityName); // TEST
 
-    renderHistoryButton();
-    displayWeather();
+    // Validate for empty input
+    if (cityName === "") {
+        alert("Enter City Name")
+        return;
+    } else {
+        // clear weather dashboard every time a new search is made
+        todayDiv.empty();
+        forecastDiv.empty();
+
+        // style ON for today and forecast DIVs
+        todayDiv.css("border", "1px solid black");
+
+        renderHistoryButton();
+        displayWeather();
+    }
 })
 
 // Add click event on the document object 
